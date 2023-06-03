@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>Welcome</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script src="/static/js/vue.min.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
+    <script src="//unpkg.com/view-design/dist/iview.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-cookies@1.7.4/vue-cookies.js"></script>
+</head>
+
+<body>
+    <div class="index" id="app">
+        <Card>
+            <p slot="title">Please log in</p>
+            <i-form>
+                <FormItem prop="user">
+                    <i-input type="text" placeholder="Useraname" v-model="user">
+                        <Icon type="ios-person-outline" slot="prepend"></Icon>
+                    </i-input>
+                </FormItem><br>
+                <FormItem prop="password">
+                    <i-input type="text" placeholder="Password" v-model="password">
+                        <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                    </i-input>
+                </FormItem><br>
+                <FormItem class="center">
+                    <Checkbox v-model="remember">Remember me</Checkbox>
+                    <i-button @click="login()">Log in</i-button>
+                </FormItem>
+            </i-form>
+        </Card>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                user: '',
+                password: '',
+                remember: ''
+
+            },
+            methods: {
+                login() {
+                    if(this.remember){
+                        this.$cookies.set("123","123")
+                    }
+                    axios.post("/login/", { user: this.user, password: this.password })
+                        .then(function (response) {
+                            if (response.data.code == 200) {
+                                window.location.href = '/index?uuid=' + String(response.data.id)
+                            }
+                            else{
+                                alert("error")
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                },
+            },
+            mounted(){
+                this.$cookies.config('90d');
+            }
+        })
+    </script>
+    <style>
+        .index {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        ;
+
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+
+        ;
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test View</title>
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/view-design/dist/styles/iview.css">
+    <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/view-design/dist/iview.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="app" style="position: absolute; left: 50%; top: 50%;transform: translate(-50%, -50%); ">
+        <form method="post" action="/api/">
+            {% csrf_token %}
+            <input name="tem" type="number" placeholder="温度" /><br>
+            <input name="hum" type="number" placeholder="湿度" /><br>
+            <input name="co2" type="number" placeholder="二氧化碳" /><br>
+            <input type="submit">
+        </form>
+    </div>
+
+</body>
+
+</html>
